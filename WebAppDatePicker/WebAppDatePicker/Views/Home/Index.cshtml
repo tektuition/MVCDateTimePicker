@@ -1,0 +1,57 @@
+﻿@model WebAppDatePicker.Models.StudentModel
+
+@{
+    ViewBag.Title = "Index";
+}
+<script src="~/scripts/jquery-1.10.2.min.js"></script>
+<script src="~/scripts/jquery-ui-1.12.1.min.js"></script>
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.datepicker').datepicker({
+            dateFormat: 'dd-M-yy',
+            changeMonth: true,
+            changeYear: true,
+            showOn: "button",
+            buttonText: '<span class="glyphicon glyphicon-calendar"></span>',
+            //minDate: new Date(),
+            yearRange : '-60:+60'
+        });
+
+        var date = new Date();
+        date.setDate(date.getDate());
+        date.setFullYear(date.getFullYear() - 18);
+
+        
+
+
+        $("#txtDateOfBirth").change(function() {
+            alert($("#txtDateOfBirth").val());
+        });
+    });
+</script>
+
+
+
+@using (Html.BeginForm("Index", "Home", FormMethod.Post))
+{
+    <div class="container">
+        <div class="row">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, new {@class="control-label"})
+                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.DateOfBirth, new {@class="control-label"})
+                @Html.EditorFor(model => model.DateOfBirth,
+                    new { htmlAttributes = new
+                    {
+                        @readonly = "true", Value = Model.DateOfBirth.ToString("dd-MMM-yyyy"),
+                        @class = "form-control datepicker", @id = "txtDateOfBirth"
+                    } })
+            </div>
+        </div>
+    </div>
+}
+
